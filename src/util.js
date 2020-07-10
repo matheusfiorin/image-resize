@@ -2,7 +2,11 @@ const fs = require("fs");
 const sharp = require("sharp");
 const BASE_PATH = "./assets/base64/";
 
-function base64ToBuffer(path) {
+function base64ToBuffer(base64) {
+  return Buffer.from(base64, "base64");
+}
+
+function pathToBuffer(path) {
   return Buffer.from(
     fs.readFileSync(path, {
       encoding: "utf-8",
@@ -12,9 +16,9 @@ function base64ToBuffer(path) {
 }
 
 function getImages() {
-  const amacianteYpe = base64ToBuffer(`${BASE_PATH}/amaciante-ype.base64`);
-  const heinekenZoada = base64ToBuffer(`${BASE_PATH}/heineken-zoada.base64`);
-  const skolPack = base64ToBuffer(`${BASE_PATH}/skol-pack.base64`);
+  const amacianteYpe = pathToBuffer(`${BASE_PATH}/amaciante-ype.base64`);
+  const heinekenZoada = pathToBuffer(`${BASE_PATH}/heineken-zoada.base64`);
+  const skolPack = pathToBuffer(`${BASE_PATH}/skol-pack.base64`);
 
   return [
     { buffer: amacianteYpe, path: "src/output/amaciante.jpg" },
@@ -47,4 +51,4 @@ function bufferToFile(buffer, path) {
   sharp(buffer).toFile(path);
 }
 
-module.exports = { getImages, baseResize };
+module.exports = { getImages, baseResize, base64ToBuffer };

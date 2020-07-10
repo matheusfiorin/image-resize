@@ -8,3 +8,6 @@ file-to-base64:	## Create a base64 with IN and OUT args. ex: make file-to-base64
 
 run: ## Run this project
 	node src/index.js
+
+start-server: ## Create a local webserver in 3000 port
+	node src/api.js
