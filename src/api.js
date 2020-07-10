@@ -1,6 +1,7 @@
+require("dotenv").config();
 const fastify = require("fastify")();
 const { base64ToBuffer, baseResize } = require("./util.js");
-const APP_PORT = 3000;
+const APP_PORT = process.env.APP_PORT || 3000;
 
 const bodyJsonSchema = {
   type: "object",
