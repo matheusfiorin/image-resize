@@ -1,6 +1,6 @@
 const fs = require("fs");
 const sharp = require("sharp");
-const BASE_PATH = "../assets/base64/";
+const BASE_PATH = "./assets/base64/";
 
 function base64ToBuffer(path) {
   return Buffer.from(
@@ -17,9 +17,9 @@ function getImages() {
   const skolPack = base64ToBuffer(`${BASE_PATH}/skol-pack.base64`);
 
   return [
-    { buffer: amacianteYpe, path: "output/amaciante.jpg" },
-    { buffer: heinekenZoada, path: "output/heineken.jpg" },
-    { buffer: skolPack, path: "output/skol.jpg" },
+    { buffer: amacianteYpe, path: "src/output/amaciante.jpg" },
+    { buffer: heinekenZoada, path: "src/output/heineken.jpg" },
+    { buffer: skolPack, path: "src/output/skol.jpg" },
   ];
 }
 
