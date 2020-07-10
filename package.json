@@ -1,0 +1,12 @@
+{
+  "name": "image-resize",
+  "version": "1.0.0",
+  "description": "A special package to resize images",
+  "main": "src/index.js",
+  "scripts": {},
+  "author": "Matheus Barão Fiorin",
+  "license": "ISC",
+  "dependencies": {
+    "sharp": "^0.25.4"
+  }
+}
