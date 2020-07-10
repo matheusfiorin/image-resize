@@ -1,5 +1,6 @@
 const fs = require("fs");
 const sharp = require("sharp");
+const BASE_PATH = "../assets/base64/";
 
 function base64ToBuffer(path) {
   return Buffer.from(
@@ -11,17 +12,19 @@ function base64ToBuffer(path) {
 }
 
 function getImages() {
-  const amacianteYpe = base64ToBuffer("../assets/base64/amaciante-ype.base64");
-  const heinekenZoada = base64ToBuffer(
-    "../assets/base64/heineken-zoada.base64"
-  );
-  const skolPack = base64ToBuffer("../assets/base64/skol-pack.base64");
+  const amacianteYpe = base64ToBuffer(`${BASE_PATH}/amaciante-ype.base64`);
+  const heinekenZoada = base64ToBuffer(`${BASE_PATH}/heineken-zoada.base64`);
+  const skolPack = base64ToBuffer(`${BASE_PATH}/skol-pack.base64`);
 
-  return { amacianteYpe, heinekenZoada, skolPack };
+  return [
+    { buffer: amacianteYpe, path: "output/amaciante.jpg" },
+    { buffer: heinekenZoada, path: "output/heineken.jpg" },
+    { buffer: skolPack, path: "output/skol.jpg" },
+  ];
 }
 
-function baseResize(buffer, path) {
-  sharp(buffer)
+async function baseResize(buffer, path) {
+  const resizedBuffer = await sharp(buffer)
     .flatten({ background: { r: 255, g: 255, b: 255 } })
     .resize({
       height: 500,
@@ -30,7 +33,18 @@ function baseResize(buffer, path) {
       background: { r: 255, g: 255, b: 255, alpha: 1 },
     })
     .toFormat("jpeg")
-    .toFile(path);
+    .toBuffer();
+
+  if (!!path) {
+    bufferToFile(resizedBuffer, path);
+    return;
+  }
+
+  return resizedBuffer;
+}
+
+function bufferToFile(buffer, path) {
+  sharp(buffer).toFile(path);
 }
 
 module.exports = { getImages, baseResize };

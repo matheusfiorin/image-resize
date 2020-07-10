@@ -1,10 +1,18 @@
 const { getImages, baseResize } = require("./util.js");
+const images = getImages();
 
-function simpleResize() {
-  const images = getImages();
-  baseResize(images.amacianteYpe, "output/amaciante.jpg");
-  baseResize(images.heinekenZoada, "output/heineken.jpg");
-  baseResize(images.skolPack, "output/skol.jpg");
+function bulkResizeToFile() {
+  images.forEach((elem) => {
+    baseResize(elem.buffer, elem.path);
+  });
 }
 
-simpleResize();
+async function singleResizeToBuffer() {
+  const resizedBuffer = await baseResize(images[1].buffer, null);
+  
+  const resizedBufferSize = `${(resizedBuffer.byteLength / 1000).toFixed(2)}KB`;
+  console.info({ resizedBufferSize });
+}
+
+bulkResizeToFile();
+singleResizeToBuffer();
